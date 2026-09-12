@@ -104,12 +104,6 @@ abstract class AppLocalizations {
   /// **'Tech Store'**
   String get appTitle;
 
-  /// No description provided for @searchProducts.
-  ///
-  /// In en, this message translates to:
-  /// **'Search products…'**
-  String get searchProducts;
-
   /// No description provided for @home.
   ///
   /// In en, this message translates to:

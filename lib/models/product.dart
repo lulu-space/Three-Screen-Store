@@ -1,28 +1,26 @@
 class Product {
-  final int id;
-  final String name;
+  final String id;
   final double price;
   final String image;
-  final int categoryId;
-  final String? description;
+  final bool isNew;
+  final String category;
 
   const Product({
     required this.id,
-    required this.name,
     required this.price,
     required this.image,
-    required this.categoryId,
-    this.description,
+    required this.isNew,
+    required this.category,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) {
+  // Factory constructor to convert from Map<String, dynamic>
+  factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      price: (json['price'] as num).toDouble(),
-      image: json['image'] as String,
-      categoryId: json['category_id'] as int? ?? 0,
-      description: json['description'] as String?,
+      id: map['id'],
+      price: map['price'],
+      image: map['image'],
+      isNew: map['isNew'],
+      category: map['category'],
     );
   }
 }

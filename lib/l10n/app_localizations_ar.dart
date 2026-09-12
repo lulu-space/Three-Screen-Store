@@ -12,9 +12,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appTitle => 'متجر التقنية';
 
   @override
-  String get searchProducts => 'ابحث عن منتجات…';
-
-  @override
   String get home => 'الرئيسية';
 
   @override

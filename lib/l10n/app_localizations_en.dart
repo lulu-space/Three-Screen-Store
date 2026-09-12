@@ -12,9 +12,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Tech Store';
 
   @override
-  String get searchProducts => 'Search products…';
-
-  @override
   String get home => 'Home';
 
   @override
