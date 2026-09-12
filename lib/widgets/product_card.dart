@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
-import '../l10n/app_localizations.dart';
-import '../l10n/product_l10n.dart';
 import '../models/product.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
   final VoidCallback onTap;
-  final VoidCallback onLongPress;
 
   const ProductCard({
     super.key,
     required this.product,
     required this.onTap,
-    required this.onLongPress,
   });
 
   @override
   Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context)!;
-    
     return GestureDetector(
       onTap: onTap,
-      onLongPress: onLongPress,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -38,57 +31,26 @@ class ProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image with "New" badge using Stack
+            // Product image
             Expanded(
               flex: 3,
-              child: Stack(
-                children: [
-                  // Product image
-                  ClipRRect(
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(12),
-                    ),
-                    child: Image.network(
-                      product.image,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: Colors.grey.shade200,
-                          child: const Icon(
-                            Icons.image_not_supported,
-                            size: 50,
-                            color: Colors.grey,
-                          ),
-                        );
-                      },
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(12),
+                ),
+                child: Image.network(
+                  product.image,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => Container(
+                    color: Colors.grey.shade200,
+                    child: const Icon(
+                      Icons.image_not_supported,
+                      size: 50,
+                      color: Colors.grey,
                     ),
                   ),
-                  // "New" badge - only shown if product.isNew
-                  if (product.isNew)
-                    Positioned(
-                      top: 8,
-                      right: 8,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          t.newLabel,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
+                ),
               ),
             ),
             // Product info
@@ -101,7 +63,7 @@ class ProductCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      t.productName(product.id),
+                      product.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -111,7 +73,7 @@ class ProductCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${product.price.toStringAsFixed(0)} ${t.ils}',
+                      '\$${product.price.toStringAsFixed(0)}',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.w600,

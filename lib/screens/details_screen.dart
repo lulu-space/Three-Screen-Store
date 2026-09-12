@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
-import '../l10n/product_l10n.dart';
 import '../models/product.dart';
 import '../routes/app_routes.dart';
 
@@ -10,8 +9,6 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
-    
-    // Receive product data from arguments
     final product = ModalRoute.of(context)!.settings.arguments as Product;
 
     return Scaffold(
@@ -22,53 +19,23 @@ class DetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Large product image with "New" badge
-            Stack(
-              children: [
-                Image.network(
-                  product.image,
-                  width: double.infinity,
-                  height: 300,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: double.infinity,
-                      height: 300,
-                      color: Colors.grey.shade200,
-                      child: const Icon(
-                        Icons.image_not_supported,
-                        size: 80,
-                        color: Colors.grey,
-                      ),
-                    );
-                  },
+            // Product image
+            Image.network(
+              product.image,
+              width: double.infinity,
+              height: 300,
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => Container(
+                width: double.infinity,
+                height: 300,
+                color: Colors.grey.shade200,
+                child: const Icon(
+                  Icons.image_not_supported,
+                  size: 80,
+                  color: Colors.grey,
                 ),
-                if (product.isNew)
-                  Positioned(
-                    top: 16,
-                    right: 16,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        t.newLabel,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
+              ),
             ),
-            // Product info
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -76,19 +43,11 @@ class DetailsScreen extends StatelessWidget {
                 children: [
                   // Product name
                   Text(
-                    t.productName(product.id),
+                    product.name,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  // Category chip
-                  Chip(
-                    label: Text(t.categoryName(product.category)),
-                    backgroundColor: Theme.of(context)
-                        .colorScheme
-                        .primaryContainer,
                   ),
                   const SizedBox(height: 16),
                   // Price
@@ -102,7 +61,7 @@ class DetailsScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${product.price.toStringAsFixed(0)} ${t.ils}',
+                        '\$${product.price.toStringAsFixed(0)}',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -122,7 +81,7 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    t.productDescription,
+                    product.description ?? t.productDescription,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey.shade700,
@@ -131,17 +90,19 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   // Buy Now button
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      // Navigate to checkout with product
-                      Navigator.pushNamed(
-                        context,
-                        AppRoutes.checkout,
-                        arguments: product,
-                      );
-                    },
-                    icon: const Icon(Icons.shopping_cart),
-                    label: Text(t.buyNow),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.checkout,
+                          arguments: product,
+                        );
+                      },
+                      icon: const Icon(Icons.shopping_cart),
+                      label: Text(t.buyNow),
+                    ),
                   ),
                 ],
               ),

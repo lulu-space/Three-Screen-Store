@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
-import '../l10n/product_l10n.dart';
 import '../models/product.dart';
 import '../routes/app_routes.dart';
 
@@ -118,9 +117,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       },
                     ),
                   ),
-                  title: Text(t.productName(product.id)),
+                  title: Text(product.name),
                   subtitle: Text(
-                    '${product.price.toStringAsFixed(0)} ${t.ils}',
+                    '\$${product.price.toStringAsFixed(0)}',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,

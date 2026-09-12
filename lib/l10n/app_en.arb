@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "appTitle": "Tech Store",
+  "searchProducts": "Search products…",
   "home": "Home",
   "details": "Details",
   "checkout": "Checkout",
